@@ -16,8 +16,14 @@ echo "Installing packages from Brewfile..."
 brew bundle --file={{ .chezmoi.sourceDir }}/Brewfile
 
 # Install zimfw (Zim Framework for Zsh)
-echo "🔹 Installing zimfw..."
-curl -fsSL https://raw.githubusercontent.com/zimfw/install/master/install.zsh | zsh
+echo "🔹 Setting up zimfw..."
+if [ -d "$HOME/.zim" ]; then
+    echo "zimfw already installed, skipping installation."
+else
+    echo "Installing zimfw..."
+    curl -fsSL https://raw.githubusercontent.com/zimfw/install/master/install.zsh | zsh
+fi
+
 
 # Set up macOS defaults
 echo "💻 Setting up macOS defaults..."
