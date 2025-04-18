@@ -1,0 +1,37 @@
+#! /bin/bash
+set -euo pipefail
+
+echo "🚀 Running initial setup..."
+
+# {{ if eq .chezmoi.os "darwin" }}
+
+# Install Homebrew if not installed
+if ! command -v brew &> /dev/null; then
+    echo "🍺 Installing Homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+
+# Install all dependencies with Brew Bundle
+echo "Installing packages from Brewfile..."
+brew bundle --file={{ .chezmoi.sourceDir }}/Brewfile
+
+# Set up macOS defaults
+echo "💻 Setting up macOS defaults..."
+
+# Disable press-and-hold for keys in favor of key repeat
+defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+
+# Set a faster keyboard repeat rate
+defaults write NSGlobalDomain KeyRepeat -int 2
+defaults write NSGlobalDomain InitialKeyRepeat -int 15
+
+# Restart affected applications
+killall Finder
+killall SystemUIServer
+
+{{ else if eq .chezmoi.os "linux" }}
+echo "🚧 Setting up Linux system... (Not implemented yet)"
+
+{{ end }}
+
+echo "✅ Setup complete! Please log out and back in for all changes to take effect."
