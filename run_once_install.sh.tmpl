@@ -15,6 +15,10 @@ fi
 echo "Installing packages from Brewfile..."
 brew bundle --file={{ .chezmoi.sourceDir }}/Brewfile
 
+# Install zimfw (Zim Framework for Zsh)
+echo "🔹 Installing zimfw..."
+curl -fsSL https://raw.githubusercontent.com/zimfw/install/master/install.zsh | zsh
+
 # Set up macOS defaults
 echo "💻 Setting up macOS defaults..."
 
