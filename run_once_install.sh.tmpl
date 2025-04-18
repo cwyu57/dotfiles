@@ -25,10 +25,6 @@ defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 defaults write NSGlobalDomain KeyRepeat -int 2
 defaults write NSGlobalDomain InitialKeyRepeat -int 15
 
-# Restart affected applications
-killall Finder
-killall SystemUIServer
-
 {{ else if eq .chezmoi.os "linux" }}
 echo "🚧 Setting up Linux system... (Not implemented yet)"
 
