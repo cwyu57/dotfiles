@@ -24,6 +24,28 @@ else
     curl -fsSL https://raw.githubusercontent.com/zimfw/install/master/install.zsh | zsh
 fi
 
+# Setup asdf plugins and versions from .tool-versions
+echo "🔧 Setting up asdf plugins and versions..."
+
+# Read through the .tool-versions file and install plugins and versions
+while IFS= read -r line || [[ -n "$line" ]]; do
+  # Skip empty lines or comments
+  [[ -z "$line" || "$line" =~ ^#.*$ ]] && continue
+
+  # Extract plugin name and version
+  plugin=$(echo "$line" | awk '{print $1}')
+  version=$(echo "$line" | awk '{print $2}')
+
+  echo "Installing asdf plugin: $plugin (if not already installed)"
+  asdf plugin add "$plugin" || true
+
+  echo "Installing $plugin version: $version"
+  asdf install "$plugin" "$version"
+
+  # Set the version for this plugin in the home directory
+  echo "Setting version for $plugin to $version in home directory"
+  asdf set "$plugin" "$version" --home
+done < "{{ .chezmoi.sourceDir }}/dot_tool-versions"
 
 # Set up macOS defaults
 echo "💻 Setting up macOS defaults..."
