@@ -32,19 +32,21 @@ while IFS= read -r line || [[ -n "$line" ]]; do
   # Skip empty lines or comments
   [[ -z "$line" || "$line" =~ ^#.*$ ]] && continue
 
-  # Extract plugin name and version
-  plugin=$(echo "$line" | awk '{print $1}')
-  version=$(echo "$line" | awk '{print $2}')
+  # Extract plugin name and all versions
+  read -r plugin versions <<< "$line"
 
   echo "Installing asdf plugin: $plugin (if not already installed)"
   asdf plugin add "$plugin" || true
 
-  echo "Installing $plugin version: $version"
-  asdf install "$plugin" "$version"
+  # Install each version
+  for version in $versions; do
+    echo "Installing $plugin version: $version"
+    asdf install "$plugin" "$version"
+  done
 
-  # Set the version for this plugin in the home directory
-  echo "Setting version for $plugin to $version in home directory"
-  asdf set "$plugin" "$version" --home
+  # Set all versions as global defaults
+  echo "Setting all versions of $plugin as defaults in home directory"
+  asdf set "$plugin" "$versions" --home
 done < "{{ .chezmoi.sourceDir }}/dot_tool-versions"
 
 # Set up macOS defaults
