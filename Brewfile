@@ -1,5 +1,6 @@
 brew "chezmoi"
 brew "git"
+brew "just"
 brew "starship"
 brew "vim"
 brew "zimfw"
