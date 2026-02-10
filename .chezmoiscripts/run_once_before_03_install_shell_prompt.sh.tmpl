@@ -1,0 +1,22 @@
+#!/bin/sh
+set -eu
+
+SCRIPT_NAME=$(basename "$0")
+echo "Running script: $SCRIPT_NAME"
+echo "🚀 Installing shell prompt..."
+
+OS="{{ .chezmoi.os }}"
+
+if [ "$OS" = "darwin" ]; then
+    brew install --cask font-fira-code-nerd-font
+    brew install starship
+elif [ "$OS" = "linux" ]; then
+    echo "🚧 Linux detected (not supported yet)"
+    exit 1
+else
+    echo "❌ Unsupported OS: $OS"
+    exit 1
+fi
+
+echo "✅ Shell prompt install complete!"
+echo
