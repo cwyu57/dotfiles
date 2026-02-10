@@ -8,8 +8,8 @@ echo "🚀 Installing shell framework..."
 OS="{{ .chezmoi.os }}"
 
 if [ "$OS" = "darwin" ]; then
-    brew install zsh # Manage Zsh via Homebrew instead of Apple’s default
-    brew install zimfw
+    /opt/homebrew/bin/brew install zsh # Manage Zsh via Homebrew instead of Apple’s default
+    /opt/homebrew/bin/brew install zimfw
 elif [ "$OS" = "linux" ]; then
     echo "🚧 Linux detected (not supported yet)"
     exit 1
