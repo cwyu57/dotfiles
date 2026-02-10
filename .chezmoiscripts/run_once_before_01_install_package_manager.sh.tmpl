@@ -1,0 +1,45 @@
+#!/bin/sh
+set -eu
+
+echo "🚀 Installing package manager..."
+
+OS="{{ .chezmoi.os }}"
+
+if [ "$OS" = "darwin" ]; then
+    # Homebrew install locations:
+    # - /opt/homebrew/bin/brew     → Apple Silicon Mac (ARM64)
+    # - /usr/local/bin/brew        → Intel Mac (x86_64)
+
+    # Determine if Homebrew needs to be installed:
+    # 1. command -v brew
+    #    - Checks if the brew binary is in the PATH and executable
+    #    - If this returns true, Homebrew is installed and usable
+    # 2. [ -x /opt/homebrew/bin/brew ]
+    #    - Checks if the binary exists at the default Apple Silicon install path
+    #    - Even if PATH is not set, we do not need to reinstall
+    # 3. [ -x /usr/local/bin/brew ]
+    #    - Checks if the binary exists at the default Intel Mac install path
+    #    - Even if PATH is not set, we do not need to reinstall
+
+
+    if ! command -v brew >/dev/null 2>&1 \
+       && [ ! -x /opt/homebrew/bin/brew ] \
+       && [ ! -x /usr/local/bin/brew ]; then
+        echo "🍺 Installing Homebrew..."
+        /bin/bash -c \
+          "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    else
+        echo "📦 Homebrew already installed, skipping"
+    fi
+
+
+elif [ "$OS" = "linux" ]; then
+    echo "🚧 Linux detected (not supported yet)"
+    exit 1
+
+else
+    echo "❌ Unsupported OS: $OS"
+    exit 1
+fi
+
+echo "✅ Package manager install complete!"
