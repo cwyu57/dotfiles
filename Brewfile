@@ -1,6 +1,7 @@
 brew "chezmoi"
 brew "git"
 brew "starship"
+brew "vim"
 brew "zimfw"
 brew "zsh"
 cask "font-fira-code-nerd-font"
