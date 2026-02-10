@@ -1,6 +1,8 @@
 #!/bin/sh
 set -eu
 
+SCRIPT_NAME=$(basename "$0")
+echo "Running script: $SCRIPT_NAME"
 echo "🚀 Installing package manager..."
 
 OS="{{ .chezmoi.os }}"
@@ -32,7 +34,7 @@ if [ "$OS" = "darwin" ]; then
 
     # Add Homebrew environment to ~/.zprofile if missing
     ZPROFILE="${HOME}/.zprofile"
-    BREW_SHELLENV='eval "$(/opt/homebrew/bin/brew shellenv)"'
+    BREW_SHELLENV='eval "$(/opt/homebrew/bin/brew shellenv zsh)"'
 
     if ! grep -Fxq "$BREW_SHELLENV" "$ZPROFILE" 2>/dev/null; then
         echo "$BREW_SHELLENV" >> "$ZPROFILE"
@@ -52,3 +54,4 @@ else
 fi
 
 echo "✅ Package manager install complete!"
+echo

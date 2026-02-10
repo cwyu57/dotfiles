@@ -1,6 +1,8 @@
 #!/bin/sh
 set -eu
 
+SCRIPT_NAME=$(basename "$0")
+echo "Running script: $SCRIPT_NAME"
 echo "🚀 Installing packages..."
 
 OS="{{ .chezmoi.os }}"
@@ -8,7 +10,7 @@ OS="{{ .chezmoi.os }}"
 if [ "$OS" = "darwin" ]; then
     # Install all dependencies with Brew Bundle
     echo "📦 Installing packages from Brewfile..."
-    /opt/homebrew/bin/brew bundle --file={{ .chezmoi.sourceDir }}/Brewfile --no-upgrade
+    brew bundle --file={{ .chezmoi.sourceDir }}/Brewfile --no-upgrade --quiet
 elif [ "$OS" = "linux" ]; then
     echo "🚧 Linux detected (not supported yet)"
     exit 1
@@ -18,3 +20,4 @@ else
 fi
 
 echo "✅ Packages install complete!"
+echo

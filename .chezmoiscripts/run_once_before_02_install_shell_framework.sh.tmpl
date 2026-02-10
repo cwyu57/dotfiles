@@ -1,6 +1,8 @@
 #!/bin/sh
 set -eu
 
+SCRIPT_NAME=$(basename "$0")
+echo "Running script: $SCRIPT_NAME"
 echo "🚀 Installing shell framework..."
 
 OS="{{ .chezmoi.os }}"
@@ -17,3 +19,4 @@ else
 fi
 
 echo "✅ Shell framework install complete!"
+echo
