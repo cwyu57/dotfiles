@@ -1,0 +1,19 @@
+#!/bin/sh
+set -eu
+
+echo "🚀 Installing shell framework..."
+
+OS="{{ .chezmoi.os }}"
+
+if [ "$OS" = "darwin" ]; then
+    brew install zsh # Manage Zsh via Homebrew instead of Apple’s default
+    brew install zimfw
+elif [ "$OS" = "linux" ]; then
+    echo "🚧 Linux detected (not supported yet)"
+    exit 1
+else
+    echo "❌ Unsupported OS: $OS"
+    exit 1
+fi
+
+echo "✅ Shell framework install complete!"
