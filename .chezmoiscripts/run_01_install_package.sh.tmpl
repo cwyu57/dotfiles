@@ -1,0 +1,20 @@
+#!/bin/sh
+set -eu
+
+echo "🚀 Installing packages..."
+
+OS="{{ .chezmoi.os }}"
+
+if [ "$OS" = "darwin" ]; then
+    # Install all dependencies with Brew Bundle
+    echo "📦 Installing packages from Brewfile..."
+    /opt/homebrew/bin/brew bundle --file={{ .chezmoi.sourceDir }}/Brewfile --no-upgrade
+elif [ "$OS" = "linux" ]; then
+    echo "🚧 Linux detected (not supported yet)"
+    exit 1
+else
+    echo "❌ Unsupported OS: $OS"
+    exit 1
+fi
+
+echo "✅ Packages install complete!"
