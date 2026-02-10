@@ -1,0 +1,23 @@
+#!/bin/sh
+set -eu
+
+SCRIPT_NAME=$(basename "$0")
+echo "Running script: $SCRIPT_NAME"
+echo "🚀 Installing runtime version manager..."
+
+OS="{{ .chezmoi.os }}"
+
+if [ "$OS" = "darwin" ]; then
+    /opt/homebrew/bin/brew install asdf
+    mkdir -p "${ASDF_DATA_DIR:-$HOME/.asdf}/completions"
+    /opt/homebrew/bin/asdf completion zsh > "${ASDF_DATA_DIR:-$HOME/.asdf}/completions/_asdf"
+elif [ "$OS" = "linux" ]; then
+    echo "🚧 Linux detected (not supported yet)"
+    exit 1
+else
+    echo "❌ Unsupported OS: $OS"
+    exit 1
+fi
+
+echo "✅ Shell prompt install complete!"
+echo
