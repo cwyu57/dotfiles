@@ -1,0 +1,41 @@
+#!/bin/sh
+set -eu
+
+SCRIPT_NAME=$(basename "$0")
+echo "Running script: $SCRIPT_NAME"
+echo "🚀 Installing runtime version manager plugin..."
+
+OS="{{ .chezmoi.os }}"
+
+if [ "$OS" = "darwin" ]; then
+  # Read through the .tool-versions file and install plugins and versions
+  while IFS= read -r line || [[ -n "$line" ]]; do
+    # Skip empty lines or comments
+    [[ -z "$line" || "$line" =~ ^#.*$ ]] && continue
+
+    # Extract plugin name and all versions
+    read -r plugin versions <<< "$line"
+
+    echo "Installing asdf plugin: $plugin (if not already installed)"
+    asdf plugin add "$plugin" || true
+
+    # Install each version
+    for version in $versions; do
+      echo "Installing $plugin version: $version"
+      asdf install "$plugin" "$version"
+    done
+
+    # Set all versions as global defaults
+    echo "Setting all versions of $plugin as defaults in home directory"
+    asdf set --home "$plugin" "$versions"
+  done < "$HOME/.tool-versions"
+elif [ "$OS" = "linux" ]; then
+    echo "🚧 Linux detected (not supported yet)"
+    exit 1
+else
+    echo "❌ Unsupported OS: $OS"
+    exit 1
+fi
+
+echo "✅ Runtime version manager plugin install complete!"
+echo
