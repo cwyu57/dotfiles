@@ -1,0 +1,27 @@
+#!/bin/sh
+set -eu
+
+SCRIPT_NAME=$(basename "$0")
+echo "Running script: $SCRIPT_NAME"
+echo "🚀 Setting OS defaults..."
+
+OS="{{ .chezmoi.os }}"
+
+if [ "$OS" = "darwin" ]; then
+    echo "🍎 Applying macOS defaults..."
+
+    defaults write -g ApplePressAndHoldEnabled -bool false
+    defaults write NSGlobalDomain InitialKeyRepeat -int 15
+    defaults write NSGlobalDomain KeyRepeat -int 2
+
+    echo "✅ macOS defaults applied!"
+elif [ "$OS" = "linux" ]; then
+    echo "🚧 Linux detected (not supported yet)"
+    exit 1
+else
+    echo "❌ Unsupported OS: $OS"
+    exit 1
+fi
+
+echo "✅ OS defaults setting complete!"
+echo
