@@ -18,3 +18,8 @@ export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 
 # append completions to fpath
 fpath=(${ASDF_DATA_DIR:-$HOME/.asdf}/completions $fpath)
+
+### gcloud
+if command -v gcloud >/dev/null 2>&1; then
+  source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
+fi
