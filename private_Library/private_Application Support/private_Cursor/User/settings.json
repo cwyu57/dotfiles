@@ -11,5 +11,6 @@
             ]
         }
     ],
-    "vim.useSystemClipboard": true
+    "vim.useSystemClipboard": true,
+    "editor.fontSize": 14
 }
