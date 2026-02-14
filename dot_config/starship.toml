@@ -1,4 +1,4 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 [gcloud]
-  format = '[$symbol$active]($style)'
+  format = '[$symbol$active]($style) '
