@@ -3,3 +3,8 @@ set nu
 set rnu
 
 inoremap jj <Esc>
+
+" https://seblog.nl/2022/03/16/2/yank-to-system-clipboard
+nmap Y "+y
+vmap Y "+y
+
