@@ -1,3 +1,6 @@
+export ZVM_SYSTEM_CLIPBOARD_ENABLED=true
+export ZVM_VI_INSERT_ESCAPE_BINDKEY=jj
+
 ### zim
 ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim
 # Install missing modules and update ${ZIM_HOME}/init.zsh if missing or outdated.
