@@ -1,3 +1,12 @@
 [user]
 	name = Chun-Wei Yu
 	email = cwyu57@gmail.com
+
+[merge]
+	tool = juxta
+
+[mergetool]
+	keepBackup = false
+
+[mergetool "juxta"]
+	cmd = juxta _mergetool --base $BASE --local $LOCAL --remote $REMOTE --merged $MERGED
