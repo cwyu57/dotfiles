@@ -98,3 +98,12 @@ hs.hotkey.bind({'command', }, 'return', function ()
     win:setFrame(usableFrame, 0)
   end
 end)
+
+-- Switch to ABC layout when alacritty is activated to fix cmd+c/v in alacritty
+hs.application.watcher.new(function(appName, event, app)
+  if event == hs.application.watcher.activated then
+    if app:bundleID() == BUNDLE_ID then
+      hs.keycodes.setLayout("ABC")
+    end
+  end
+end):start()
