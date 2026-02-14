@@ -1,0 +1,100 @@
+local spaces = require("hs.spaces")
+
+local BUNDLE_ID = 'org.alacritty'
+local TERMINAL_PANEL_HEIGHT = 350
+
+-- Panel frame before going full; restore to this when toggling back (so user's resize is kept)
+local savedTerminalPanelFrame = nil
+
+local function getPanelFrame(screen)
+  screen = screen or hs.screen.mainScreen()
+  local u = screen:frame()
+  local h = math.min(TERMINAL_PANEL_HEIGHT, u.h)
+  return hs.geometry.rect(u.x, u.y + u.h - h, u.w, h)
+end
+
+-- Switch alacritty (show/hide, dock from bottom)
+hs.hotkey.bind({'command'}, 'escape', function ()
+  function moveWindow(alacritty, space, mainScreen)
+    -- move to current space, panel from bottom above macOS Dock
+    local win = nil
+
+    local attempts = 0
+    while win == nil and attempts < 10 do
+      win = alacritty:mainWindow()
+      hs.timer.usleep(100000) -- 0.1s
+      attempts = attempts + 1
+    end
+
+    if win == nil then
+      print('Failed to find alacritty window')
+      return
+    end
+
+    local fullFrame = mainScreen:fullFrame() -- fullFrame = entire screen
+    local usableFrame = mainScreen:frame() -- usableFrame = usable area excluding menu bar and Dock
+
+    -- Dock height (bottom): space reserved by macOS Dock below usable area
+    local dockHeight = (fullFrame.y + fullFrame.h) - (usableFrame.y + usableFrame.h)
+
+    -- Position panel in usable area so it sits just above the Dock
+    local winFrame = win:frame()
+    local h = math.min(TERMINAL_PANEL_HEIGHT, usableFrame.h)
+    winFrame.x = usableFrame.x
+    winFrame.w = usableFrame.w
+    winFrame.h = h
+    winFrame.y = usableFrame.y + usableFrame.h - h
+    win:setFrame(winFrame, 0)
+    spaces.moveWindowToSpace(win, space)
+
+    win:focus()
+  end
+
+  local alacritty = hs.application.get(BUNDLE_ID)
+
+  if alacritty ~= nil and alacritty:isFrontmost() then
+    alacritty:hide()
+  else
+    local space = spaces.activeSpaceOnScreen()
+    local mainScreen = hs.screen.mainScreen()
+
+    if alacritty == nil and hs.application.launchOrFocusByBundleID(BUNDLE_ID) then
+      local appWatcher = nil
+      appWatcher = hs.application.watcher.new(function(name, event, app)
+        if event == hs.application.watcher.launched and app:bundleID() == BUNDLE_ID then
+          app:hide()
+          moveWindow(app, space, mainScreen)
+          appWatcher:stop()
+        end
+      end)
+      appWatcher:start()
+    end
+
+    if alacritty ~= nil then
+      moveWindow(alacritty, space, mainScreen)
+    end
+  end
+end)
+
+-- Toggle full (usable area) <-> panel size (Cmd+Option+M); restore to last panel size if resized
+hs.hotkey.bind({'command', }, 'return', function ()
+  local alacritty = hs.application.get(BUNDLE_ID)
+  if alacritty == nil then return end
+
+  local win = alacritty:mainWindow()
+
+  local screen = win:screen() or hs.screen.mainScreen()
+  local usableFrame = screen:frame()
+  local currentFrame = win:frame()
+
+  -- If height is nearly full usable height, treat as full -> restore to saved panel size
+  if currentFrame.h >= usableFrame.h - 2 then
+    local restoreFrame = savedTerminalPanelFrame or getPanelFrame(screen)
+    win:setFrame(restoreFrame, 0)
+
+  else
+    -- Save current frame (copy) before going full so we can restore user's size
+    savedTerminalPanelFrame = hs.geometry.rect(currentFrame.x, currentFrame.y, currentFrame.w, currentFrame.h)
+    win:setFrame(usableFrame, 0)
+  end
+end)
