@@ -1,3 +1,10 @@
 {
-    "chat.disableAIFeatures": true
+    "chat.disableAIFeatures": true,
+    "vim.insertModeKeyBindingsNonRecursive": [
+          {
+            "before": ["j", "j"],
+            "after": ["<Esc>"]
+        }
+    ],
+    "vim.useSystemClipboard": true
 }

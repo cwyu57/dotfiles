@@ -1,3 +1,5 @@
 set hlsearch
 set nu
 set rnu
+
+inoremap jj <Esc>
