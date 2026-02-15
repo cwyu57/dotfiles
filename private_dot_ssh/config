@@ -1,3 +1,4 @@
-Host github.com
+Host *
   AddKeysToAgent yes
-  IdentityFile ~/.ssh/cwyu57
+
+Include ~/.ssh/config.d/*
