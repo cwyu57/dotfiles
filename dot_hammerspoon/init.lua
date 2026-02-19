@@ -1,7 +1,7 @@
 local spaces = require("hs.spaces")
 
 local BUNDLE_ID = 'org.alacritty'
-local TERMINAL_PANEL_HEIGHT = 350
+local TERMINAL_PANEL_HEIGHT = 500
 
 -- Panel frame before going full; restore to this when toggling back (so user's resize is kept)
 local savedTerminalPanelFrame = nil
