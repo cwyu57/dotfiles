@@ -12,3 +12,9 @@ gcloud-config-ssh: gcloud-switch-profile
   profile="$(gum input --prompt "SSH profile> ")"
   [ -n "$profile" ]
   gcloud compute config-ssh --ssh-key-file="$HOME/.ssh/${profile}-google-compute-engine" --ssh-config-file="$HOME/.ssh/config.d/${profile}"
+
+gcloud-config-ssh-remove: gcloud-switch-profile
+  #!/usr/bin/env sh
+  profile="$(gum input --prompt "SSH profile> ")"
+  [ -n "$profile" ]
+  gcloud compute config-ssh --remove --ssh-key-file="$HOME/.ssh/${profile}-google-compute-engine" --ssh-config-file="$HOME/.ssh/config.d/${profile}"
