@@ -1,4 +1,7 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
+[conda]
+  ignore_base = false
+
 [gcloud]
   format = '[$symbol$active]($style) '
