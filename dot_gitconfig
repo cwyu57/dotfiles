@@ -1,6 +1,7 @@
 [user]
 	name = Chun-Wei Yu
 	email = cwyu57@gmail.com
+	signingkey = 393417914BCB4A73
 
 [merge]
 	tool = juxta
@@ -13,3 +14,13 @@
 
 [pull]
 	rebase = true
+
+[commit]
+	gpgsign = true
+
+[tag]
+	gpgSign = true
+
+# Included path (~/work/.gitconfig) is not managed by chezmoi
+[includeIf "gitdir:~/work/"]
+	path = ~/work/.gitconfig
