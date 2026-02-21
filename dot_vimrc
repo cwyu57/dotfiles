@@ -1,6 +1,8 @@
 set hlsearch
 set nu
 set rnu
+set splitright   " :vsp opens new window on the right
+set splitbelow   " :sp opens new window below
 
 inoremap jj <Esc>
 
