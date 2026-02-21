@@ -12,5 +12,6 @@
         }
     ],
     "vim.useSystemClipboard": true,
-    "editor.fontSize": 14
+    "editor.fontSize": 14,
+    "vim.hlsearch": true
 }
