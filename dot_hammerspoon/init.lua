@@ -4,14 +4,8 @@ local BUNDLE_ID = 'org.alacritty'
 local TERMINAL_PANEL_HEIGHT = 500
 
 -- Panel frame before going full; restore to this when toggling back (so user's resize is kept)
-local savedTerminalPanelFrame = nil
-
-local function getPanelFrame(screen)
-  screen = screen or hs.screen.mainScreen()
-  local u = screen:frame()
-  local h = math.min(TERMINAL_PANEL_HEIGHT, u.h)
-  return hs.geometry.rect(u.x, u.y + u.h - h, u.w, h)
-end
+local currentTerminalPanelFrame = nil
+local savedTerminalPanelFrameOnLeavingFull = nil
 
 -- Switch alacritty (show/hide, dock from bottom)
 hs.hotkey.bind({'command'}, 'escape', function ()
@@ -39,12 +33,16 @@ hs.hotkey.bind({'command'}, 'escape', function ()
 
     -- Position panel in usable area so it sits just above the Dock
     local winFrame = win:frame()
-    local h = math.min(TERMINAL_PANEL_HEIGHT, usableFrame.h)
+    local h = math.min(
+      (currentTerminalPanelFrame and currentTerminalPanelFrame.h) or TERMINAL_PANEL_HEIGHT, 
+      usableFrame.h
+    )
     winFrame.x = usableFrame.x
     winFrame.w = usableFrame.w
     winFrame.h = h
     winFrame.y = usableFrame.y + usableFrame.h - h
     win:setFrame(winFrame, 0)
+    currentTerminalPanelFrame = winFrame
     spaces.moveWindowToSpace(win, space)
 
     win:focus()
@@ -89,13 +87,14 @@ hs.hotkey.bind({'command', }, 'return', function ()
 
   -- If height is nearly full usable height, treat as full -> restore to saved panel size
   if currentFrame.h >= usableFrame.h - 2 then
-    local restoreFrame = savedTerminalPanelFrame or getPanelFrame(screen)
-    win:setFrame(restoreFrame, 0)
+    win:setFrame(savedTerminalPanelFrameOnLeavingFull, 0)
+    currentTerminalPanelFrame = savedTerminalPanelFrameOnLeavingFull
 
   else
     -- Save current frame (copy) before going full so we can restore user's size
-    savedTerminalPanelFrame = hs.geometry.rect(currentFrame.x, currentFrame.y, currentFrame.w, currentFrame.h)
+    savedTerminalPanelFrameOnLeavingFull = hs.geometry.rect(currentFrame.x, currentFrame.y, currentFrame.w, currentFrame.h)
     win:setFrame(usableFrame, 0)
+    currentTerminalPanelFrame = usableFrame
   end
 end)
 
