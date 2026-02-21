@@ -8,3 +8,6 @@
   bold_italic = { family = "FiraCode Nerd Font", style = "Bold Italic" }
   size = 16
 
+[terminal.shell]
+  program = "/opt/homebrew/bin/tmux"
+  args = ["new-session", "-A", "-s", "main"]
