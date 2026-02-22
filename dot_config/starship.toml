@@ -5,3 +5,6 @@
 
 [gcloud]
   format = '[$symbol$active]($style) '
+
+[git_commit]
+  tag_disabled = false
