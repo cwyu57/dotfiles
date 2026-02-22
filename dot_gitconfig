@@ -12,17 +12,32 @@
 [mergetool "juxta"]
 	cmd = juxta _mergetool --base $BASE --local $LOCAL --remote $REMOTE --merged $MERGED
 
+[init]
+	defaultBranch = main
+
 [pull]
 	rebase = true
+	default = current
 
 [push]
 	autoSetupRemote = true
+	default = current
+	followTags = true
+
+[rebase]
+	autoStash = true
+	missingCommitsCheck = warn
 
 [commit]
 	gpgsign = true
 
 [tag]
 	gpgSign = true
+
+[status]
+	branch = true
+	showStash = true
+	showUntrackedFiles = all
 
 # Included path (~/work/.gitconfig) is not managed by chezmoi
 [includeIf "gitdir:~/work/"]
