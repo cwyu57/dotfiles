@@ -22,6 +22,18 @@ fpath=(${ASDF_DATA_DIR:-$HOME/.asdf}/completions $fpath)
 ### gcloud
 if command -v gcloud >/dev/null 2>&1; then
   source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
+
+  GCLOUD_SDK_BIN="$(gcloud info --format='value(installation.sdk_root)')/bin"
+  # Install gke-gcloud-auth-plugin if not present
+  if [[ ! -x "$GCLOUD_SDK_BIN/gke-gcloud-auth-plugin" ]]; then
+    gcloud components install gke-gcloud-auth-plugin
+  fi
+
+  # Add gcloud SDK bin to PATH if not already there (for gke-gcloud-auth-plugin exec auth)
+  case ":$PATH:" in
+    *":$GCLOUD_SDK_BIN:"*) ;;
+    *) export PATH="$GCLOUD_SDK_BIN:$PATH" ;;
+  esac
 fi
 
 # >>> conda initialize >>>
