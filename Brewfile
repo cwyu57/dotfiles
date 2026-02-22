@@ -1,5 +1,6 @@
 brew "asdf"
 brew "chezmoi"
+brew "cog"
 brew "conda-zsh-completion"
 brew "editorconfig"
 brew "git"
