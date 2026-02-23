@@ -53,3 +53,6 @@ unset __conda_setup
 
 ### kubectl
 source <(kubectl completion zsh)
+
+# Created by `pipx` on 2026-02-23 09:21:26
+export PATH="$PATH:$HOME/.local/bin"
