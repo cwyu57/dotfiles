@@ -4,6 +4,7 @@
   ignore_base = false
 
 [gcloud]
+  symbol = ''
   format = '[$symbol$active]($style) '
 
 [git_commit]
