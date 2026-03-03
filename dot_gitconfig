@@ -3,6 +3,9 @@
 	email = cwyu57@gmail.com
 	signingkey = 393417914BCB4A73
 
+[core]
+	excludesfile = ~/.gitignore
+
 [merge]
 	tool = juxta
 
