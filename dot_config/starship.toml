@@ -9,3 +9,6 @@
 
 [git_commit]
   tag_disabled = false
+
+[kubernetes]
+  disabled = false
