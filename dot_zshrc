@@ -56,3 +56,8 @@ source <(kubectl completion zsh)
 
 # Created by `pipx` on 2026-02-23 09:21:26
 export PATH="$PATH:$HOME/.local/bin"
+
+### just
+# Global justfile (~/.config/just/justfile); plain `just` keeps finding the
+# nearest project justfile as usual.
+alias justg='just -g'
