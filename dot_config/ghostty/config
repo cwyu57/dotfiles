@@ -1,0 +1,10 @@
+font-family = FiraCode Nerd Font
+font-size = 16
+
+# Matches the iTerm2 palette so prompt colours don't jump between terminals.
+# Ghostty's own default is Tomorrow Night, which is far less saturated.
+theme = iTerm2 Default
+
+# Quake-style panel is driven by Hammerspoon (~/.hammerspoon/init.lua), not by
+# Ghostty's built-in quick terminal: a normal window that gets repositioned.
+window-decoration = none
