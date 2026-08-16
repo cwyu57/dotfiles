@@ -1,0 +1,11 @@
+# Everything listed here is deliberately kept out of the source tree so it can never be swept in by `chezmoi add` / `chezmoi re-add`.
+
+# gcloud-generated SSH host inventory.
+# `just gcloud-config-ssh` runs `gcloud compute config-ssh --ssh-config-file ~/.ssh/config.d/<profile>`, which writes GCE instance names, project IDs and raw IP addresses into this directory.
+# Allowlist only the hand-written fragments; ignore everything else.
+.ssh/config.d/*
+!.ssh/config.d/cwyu57
+
+# macOS noise that has no business in a dotfiles repo.
+.ssh/.DS_Store
+**/.DS_Store
