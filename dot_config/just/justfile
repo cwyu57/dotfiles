@@ -1,2 +1,3 @@
+mod docker
 mod gcloud
 mod kube
