@@ -6,6 +6,10 @@
 .ssh/config.d/*
 !.ssh/config.d/cwyu57
 
+# Repo maintenance tasks (`make brew-dump` etc.), not part of the dotfiles.
+# Without this chezmoi would deploy it to ~/Makefile, the way it does ~/Brewfile.
+Makefile
+
 # macOS noise that has no business in a dotfiles repo.
 .ssh/.DS_Store
 **/.DS_Store
