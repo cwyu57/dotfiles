@@ -10,7 +10,7 @@ BREWFILE_DROP := ^(uv|npm) "
 
 .DEFAULT_GOAL := help
 
-.PHONY: help brew-dump brew-check brew-install brew-doctor
+.PHONY: help brew-dump brew-check brew-install brew-upgrade brew-doctor
 
 help: ## Show this help
 	@grep -hE '^[a-z][a-z-]*:.*## ' $(MAKEFILE_LIST) \
@@ -28,6 +28,9 @@ brew-check: ## Verify every declared package is installed and current
 
 brew-install: ## Install declared packages that are missing (what bootstrap runs)
 	brew bundle install --file=$(BREWFILE) --no-upgrade
+
+brew-upgrade: ## Install missing packages and upgrade outdated ones
+	brew bundle install --file=$(BREWFILE)
 
 brew-doctor: ## Warn about untrusted taps, whose formulae dump silently skips
 	@untrusted=$$(brew tap-info --json --installed \
