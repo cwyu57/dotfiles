@@ -1,6 +1,5 @@
 tap "hashicorp/tap", trusted: true
 tap "heroku/brew", trusted: true
-brew "asdf"
 brew "chezmoi"
 brew "cloud-sql-proxy"
 brew "editorconfig"

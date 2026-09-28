@@ -3,13 +3,13 @@ set -eu
 
 SCRIPT_NAME=$(basename "$0")
 echo "Running script: $SCRIPT_NAME"
-echo "🚀 Installing runtime version manager..."
+echo "🚀 Installing runtime versions..."
 
 OS="{{ .chezmoi.os }}"
 
 if [ "$OS" = "darwin" ]; then
-    # The formula ships the zsh completion, so there is nothing to generate.
-    /opt/homebrew/bin/brew install mise
+    # Install every tool and version listed in ~/.config/mise/config.toml.
+    /opt/homebrew/bin/mise install
 elif [ "$OS" = "linux" ]; then
     echo "🚧 Linux detected (not supported yet)"
     exit 1
@@ -18,5 +18,5 @@ else
     exit 1
 fi
 
-echo "✅ Runtime version manager install complete!"
+echo "✅ Runtime versions install complete!"
 echo

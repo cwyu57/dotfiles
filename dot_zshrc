@@ -13,11 +13,10 @@ source ${ZIM_HOME}/init.zsh
 ### starship
 eval "$(starship init zsh)"
 
-### asdf
-export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
-
-# append completions to fpath
-fpath=(${ASDF_DATA_DIR:-$HOME/.asdf}/completions $fpath)
+### mise
+# Hooks into precmd/chpwd so tool versions and env vars follow the directory.
+# Completions come from the Homebrew formula's site-functions.
+eval "$(mise activate zsh)"
 
 ### gcloud
 if command -v gcloud >/dev/null 2>&1; then

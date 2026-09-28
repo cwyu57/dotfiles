@@ -1,0 +1,9 @@
+# Global tool versions. The first version of each tool is the default on PATH;
+# the rest stay installed so a project config can pin them.
+[tools]
+helm = ["4.1.1", "3.20.0"]
+kubectl = "1.35.0"
+node = ["lts", "24.13.0", "22.22.0", "20.20.0", "18.20.8"]
+python = "3.13.12"
+ruby = "2.7.8"
+uv = "0.10.1"
