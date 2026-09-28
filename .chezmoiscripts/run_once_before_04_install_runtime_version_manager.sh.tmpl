@@ -8,7 +8,6 @@ echo "🚀 Installing runtime version manager..."
 OS="{{ .chezmoi.os }}"
 
 if [ "$OS" = "darwin" ]; then
-    # The formula ships the zsh completion, so there is nothing to generate.
     /opt/homebrew/bin/brew install mise
 elif [ "$OS" = "linux" ]; then
     echo "🚧 Linux detected (not supported yet)"

@@ -14,8 +14,7 @@ source ${ZIM_HOME}/init.zsh
 eval "$(starship init zsh)"
 
 ### mise
-# Hooks into precmd/chpwd so tool versions and env vars follow the directory.
-# Completions come from the Homebrew formula's site-functions.
+###   Reference: https://mise.jdx.dev/cli/activate.html#mise-activate
 eval "$(mise activate zsh)"
 
 ### gcloud
